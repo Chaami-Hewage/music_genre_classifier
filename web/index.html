@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lyrics Genre Classifier</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <h1>Lyrics Genre Classifier</h1>
+          <p class="subtitle">
+            Paste lyrics, press classify, and see the model confidence across all trained genres.
+          </p>
+        </div>
+        <div class="badge" id="statusBadge" title="Backend health">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">Checking…</span>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card">
+          <div class="cardTitleRow">
+            <h2>Input lyrics</h2>
+            <div class="actions">
+              <button class="btn btnGhost" id="btnExample" type="button">Insert example</button>
+              <button class="btn btnGhost" id="btnClear" type="button">Clear</button>
+            </div>
+          </div>
+
+          <textarea
+            id="lyrics"
+            class="textarea"
+            placeholder="Copy-paste lyrics here…"
+            spellcheck="false"
+          ></textarea>
+
+          <div class="row">
+            <button class="btn btnPrimary" id="btnClassify" type="button">
+              Classify
+            </button>
+            <div class="hint" id="hint">
+              Tip: longer lyrics (150+ chars) usually classify better.
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Result</h2>
+
+          <div class="resultTop">
+            <div class="resultLabel">
+              <div class="kicker">Predicted genre</div>
+              <div class="predicted" id="predicted">—</div>
+            </div>
+            <div class="resultMeta">
+              <div class="pill" id="latencyPill" title="Request latency">—</div>
+              <div class="pill" id="charsPill" title="Lyrics length">—</div>
+            </div>
+          </div>
+
+          <div class="chartWrap">
+            <canvas id="chart" height="160"></canvas>
+          </div>
+
+          <div class="tableWrap">
+            <table class="table" id="table">
+              <thead>
+                <tr>
+                  <th>Genre</th>
+                  <th class="num">Score</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          This UI visualizes scores derived from the model’s raw margins (softmax-normalized).
+        </div>
+        <div class="muted">
+          Endpoint: <code>/api/predict</code>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
